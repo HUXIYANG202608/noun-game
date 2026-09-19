@@ -240,6 +240,61 @@ footer.sticky{padding-top:2px}
   .pkq{font-size:calc(var(--fs-q)*.78)}
   .pkopt{min-height:40px;padding:6px 10px}
 }
+
+/* ---------- 连对进度 & 小礼物（希沃大屏可见） ---------- */
+.cbwrap{display:none;align-items:center;gap:10px;flex-wrap:wrap;background:var(--card);
+  border:2px solid var(--line);border-radius:var(--r);padding:9px 13px}
+.cbmini{display:flex;align-items:center;gap:6px;flex:0 0 auto;white-space:nowrap;
+  font-weight:800;font-size:var(--fs-s);color:#b45309;font-variant-numeric:tabular-nums}
+.cbmini .md{display:flex;gap:3px}
+.cbmini .md i{display:block;width:9px;height:9px;border-radius:50%;background:#e2e8f3;
+  border:1px solid #d3dcea}
+.cbmini .md i.f{background:#f6b100;border-color:#e0a300}
+.cbwrap.on{border-color:#f6b100;background:#fffdf4}
+.cbwrap .cbl{flex:0 0 auto;font-weight:800;font-size:var(--fs-s);color:var(--ink2)}
+.cbwrap .cbl b{font-size:calc(var(--fs-o)*1.2);color:#b45309;font-variant-numeric:tabular-nums}
+.cbwrap .cbr{margin-left:auto;font-weight:700;font-size:calc(var(--fs-s)*1.05);color:#b45309;text-align:right}
+.cbdots{display:flex;gap:6px;flex:0 0 auto}
+.cbdots i{display:block;width:15px;height:15px;border-radius:50%;background:#e2e8f3;
+  border:1px solid #d3dcea;transition:.15s}
+.cbdots i.f{background:#f6b100;border-color:#e0a300}
+.fbm{display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px;margin:-2px 0 9px;
+  font-weight:800;font-size:calc(var(--fs-s)*1.1);color:var(--ink2)}
+.fbm .p{color:var(--ok);font-size:calc(var(--fs-o)*1.15)}
+.fbm .c{color:#b45309}
+.fbm .g{color:var(--ok)}
+.fbm.no .c{color:var(--no)}
+.fbm .a{color:var(--ink);background:#eef7f2;border:1px dashed #a8ddc0;border-radius:8px;padding:2px 10px}
+.gift{position:fixed;top:0;left:0;right:0;bottom:0;z-index:99;display:flex;align-items:center;
+  justify-content:center;background:rgba(20,32,52,.6);padding:20px;pointer-events:none;
+  animation:pop .2s ease}
+.gift .gbox{background:#fff;border:6px solid #f6b100;border-radius:26px;padding:26px 30px 22px;
+  text-align:center;max-width:92vw;box-shadow:0 16px 44px rgba(0,0,0,.3)}
+.gift .gico{font-size:96px;line-height:1.06;animation:gbounce .8s ease-in-out infinite alternate}
+.gift .gico2{font-size:34px;letter-spacing:6px;margin-top:4px}
+.gift .gt1{font-size:26px;font-weight:900;color:#b45309;margin-top:12px;line-height:1.35}
+.gift .gt0{font-size:32px;font-weight:900;color:#b45309;margin-top:2px;line-height:1.3}
+.gift .gt2{font-size:15px;font-weight:700;color:var(--ink2);margin-top:10px;line-height:1.6}
+@keyframes gbounce{from{transform:translateY(0) scale(1)}to{transform:translateY(-12px) scale(1.05)}}
+@media (prefers-reduced-motion:reduce){.gift .gico{animation:none}}
+.gwall{margin-top:14px;border-top:1px dashed var(--line);padding-top:12px}
+.gwall .gwt{font-size:var(--fs-s);font-weight:700;color:var(--ink2)}
+.gwall .gwl{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-top:8px;
+  font-size:30px;line-height:1.25}
+.gwall .gws{font-size:var(--fs-s);color:var(--ink2);margin-top:8px;line-height:1.7}
+@media (min-width:820px){.cbwrap{display:flex}.cbmini{display:none}
+  .cbdots i{width:18px;height:18px}.cbdots{gap:7px}
+  .gift .gico{font-size:120px}.gift .gico2{font-size:44px}
+  .gift .gt1{font-size:34px}.gift .gt2{font-size:18px}.gift .gt0{font-size:40px}}
+@media (min-width:1280px){.cbdots i{width:22px;height:22px}.cbdots{gap:9px}
+  .gift .gico{font-size:160px}.gift .gico2{font-size:58px}
+  .gift .gt1{font-size:46px}.gift .gt2{font-size:24px}
+  .gift .gt0{font-size:56px}
+  .gift .gbox{border-width:8px;border-radius:34px;padding:34px 44px 28px}
+  .gwall .gwl{font-size:56px}.gwall .gwt{font-size:calc(var(--fs-s)*1.1)}}
+@media (min-width:1700px){.gift .gico{font-size:200px}.gift .gt1{font-size:58px}
+  .gift .gt2{font-size:30px}.gift .gico2{font-size:72px}.gift .gt0{font-size:66px}
+  .cbdots i{width:26px;height:26px}}
 </style>
 </head>
 <body>
@@ -251,6 +306,7 @@ var A={"03ceba4a957d":"SUQzBAAAAAAAIlRTU0UAAAAOAAADTGF2ZjYxLjcuMTAwAAAAAAAAAAAAA
 var PRAISE={"ok":["praise_excellent","praise_great-job","praise_amazing","praise_perfect","praise_well-done"],"no":["praise_try-again","praise_dont-give-up","praise_almost-there"]};
 var KEY="nwn_v1_";
 var TIMER={form:20,pick:20,cloze:30,mean:30,sent:25};
+var COMBO_GIFT=5;   /* 连对满 5 题送一份小礼物 */
 function b64d(s){var bin=atob(s),b=new Uint8Array(bin.length);for(var i=0;i<bin.length;i++)b[i]=bin.charCodeAt(i);
   return new TextDecoder("utf-8").decode(b);}
 function h32(s){var h=0x811c9dc5;for(var i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,0x01000193)>>>0;}return h.toString(16);}
@@ -292,7 +348,7 @@ var PROG=loadP();
 
 /* ---------- 状态 ---------- */
 var S={scr:"home",lv:0,qs:[],i:0,score:0,combo:0,maxCombo:0,right:0,wrong:[],timed:true,retry:false,
-  answered:false,chosen:-1,timeout:false,t0:0,tid:null,left:0};
+  answered:false,chosen:-1,timeout:false,t0:0,tid:null,left:0,gifts:[]};
 var app=document.getElementById("wrap");
 
 function timedOn(){try{var v=localStorage.getItem(KEY+"timed");return v===null?true:v==="1";}catch(e){return true;}}
@@ -300,7 +356,7 @@ function setTimed(v){S.timed=v;try{localStorage.setItem(KEY+"timed",v?"1":"0");}
 
 /* ---------- 首页 ---------- */
 function renderHome(){
-  stopTimer();
+  stopTimer();closeGift();
   var total=0,done=0;
   var h='<div class="hero"><h1>名词变形记</h1><div class="sub">外研版《名词与数词》· '+BANK.length+' 关 '+BANK.reduce(function(a,b){return a+b.qs.length;},0)+' 题<br>把课件里的规则，变成手上的判断</div></div>';
   for(var i=0;i<BANK.length;i++){
@@ -322,8 +378,9 @@ function renderHome(){
      '1. 点一个答案，答完立刻看到这条规则；<br>'+
      '2. 答错的题会进“错题口袋”，关末可以只重做错题；<br>'+
      '3. 手机左右滑动、电脑按 ← → 都能翻题，按 1–4 直接选；<br>'+
-     '4. 答完可以点“听正确读音”跟着读一遍。</div>';
-  h+='<div class="tips" style="text-align:center">已获 <b>'+total+'</b> / '+(BANK.length*3)+' 星　·　通关 <b>'+done+'</b> / '+BANK.length+' 关</div>';
+     '4. 答完可以点“听正确读音”跟着读一遍；<br>'+
+     '5. 连续答对 5 题，就会收到一份小礼物 🎁（花、小动物……）。</div>';
+  h+='<div class="tips" style="text-align:center">已获 <b>'+total+'</b> / '+(BANK.length*3)+' 星　·　通关 <b>'+done+'</b> / '+BANK.length+' 关　·　小礼物 <b>'+giftTotal()+'</b> 件</div>';
   app.innerHTML=h;
   app.className="wrap";
   S.timed=t;
@@ -350,7 +407,7 @@ function startLevel(idx,onlyWrong){
     for(var j2=0;j2<q.o.length;j2++){if(h32(q.o[j2])===q.k){q.correctIdx=j2;break;}}
     S.qs.push(q);
   }
-  S.i=0;S.score=0;S.combo=0;S.maxCombo=0;S.right=0;S.wrong=[];
+  S.i=0;S.score=0;S.combo=0;S.maxCombo=0;S.right=0;S.wrong=[];S.gifts=[];closeGift();
   renderQ();
 }
 
@@ -358,11 +415,14 @@ function curQ(){return S.qs[S.i];}
 
 function renderQ(){
   var q=curQ(),lv=BANK[S.lv];
+  closeGift();
   S.answered=false;S.chosen=-1;S.timeout=false;
   var h='<header class="hud"><button class="back" id="bk">←</button>'+
     '<span class="badge">第'+lv.id+'关 · '+esc(lv.name)+'</span>'+
     '<span class="cnt">'+(S.i+1)+' / '+S.qs.length+'</span></header>';
-  h+='<div class="tbar"><i id="tbar"></i></div><div class="tmeta"><span>⏱ 剩余</span><span class="sec" id="sec">--</span></div>';
+  h+='<div class="tbar"><i id="tbar"></i></div><div class="tmeta"><span>⏱ 剩余</span>'+
+     '<span class="cbmini" id="cbm">'+comboMiniHTML()+'</span><span class="sec" id="sec">--</span></div>';
+  h+=comboBarHTML();
   var qcls=(q.t==="mean"||q.t==="sent")?"qtext sent":"qtext";
   var qhtml=esc(q.q).replace(/_{3,}/g,'<span class="blk"></span>');
   h+='<main class="rt" id="rt"><div class="qcard"><span class="tag">'+esc(q.tag)+'</span>'+
@@ -387,6 +447,79 @@ function renderQ(){
   bindSwipe(document.getElementById("rt"));
   startTimer();
 }
+
+/* ---------- 连对进度 & 小礼物（连对满 5 题送一份，希沃大屏可见） ---------- */
+var GIFTS=[
+ {e:"💐",e2:"🌸 🌷 🌺",n:"一束花",t:"送给认真答题的你，继续加油！"},
+ {e:"🐰",e2:"🥕 🐾",n:"一只小兔子",t:"小兔子说你反应真快！"},
+ {e:"🐼",e2:"🎋 🎍",n:"一只熊猫",t:"稳稳的连对，像熊猫一样稳！"},
+ {e:"🐱",e2:"🎀 🐾",n:"一只小猫",t:"喵～连对的感觉真好！"},
+ {e:"🐶",e2:"🎾 🐾",n:"一只小狗",t:"汪汪！下一个连对也在等你！"},
+ {e:"🍬",e2:"🍭 🍫",n:"一颗糖果",t:"甜甜的奖励，继续保持！"},
+ {e:"🎈",e2:"🎉 ✨",n:"一个气球",t:"气氛组已就位，接着冲！"},
+ {e:"⭐",e2:"✨ 🌟",n:"一颗星星",t:"说明你把这条规则记牢了！"},
+ {e:"🍀",e2:"🌿 ✨",n:"一片幸运草",t:"好运气来自认真读题！"}
+];
+var giftTid=null;
+function giftTotal(){try{return +(localStorage.getItem(KEY+"gift")||0)||0;}catch(e){return 0;}}
+function takeGift(){
+  var g=GIFTS[Math.floor(Math.random()*GIFTS.length)];
+  S.gifts.push(g);
+  try{localStorage.setItem(KEY+"gift",String(giftTotal()+1));}catch(e){}
+  return g;
+}
+/* 连对进度条：5 个圆点 + 还差几题 */
+function comboBarHTML(){
+  var filled=S.combo%COMBO_GIFT;if(S.combo>0&&filled===0)filled=COMBO_GIFT;
+  var dots="";for(var i=0;i<COMBO_GIFT;i++)dots+='<i'+(i<filled?' class="f"':'')+'></i>';
+  var hint=S.combo>=COMBO_GIFT
+    ? '已连对 '+S.combo+' 题 · 每满 '+COMBO_GIFT+' 题送一份 🎁'
+    : '再连对 '+(COMBO_GIFT-S.combo)+' 题送小礼物 🎁';
+  return '<div class="cbwrap'+(S.combo?' on':'')+'" id="cb">'+
+    '<span class="cbl">🔥 连对 <b>'+S.combo+'</b></span>'+
+    '<span class="cbdots">'+dots+'</span><span class="cbr">'+hint+'</span></div>';
+}
+/* 手机窄屏用的紧凑连对条（塞进倒计时那一行，不额外占高度） */
+function comboMiniHTML(){
+  var filled=S.combo%COMBO_GIFT;if(S.combo>0&&filled===0)filled=COMBO_GIFT;
+  var d="";for(var i=0;i<COMBO_GIFT;i++)d+='<i'+(i<filled?' class="f"':'')+'></i>';
+  return '<span>🔥 连对 '+S.combo+'</span><span class="md">'+d+'</span>';
+}
+function refreshCombo(){
+  var m=document.getElementById("cbm");if(m)m.innerHTML=comboMiniHTML();
+  var el=document.getElementById("cb");if(!el)return;
+  var box=document.createElement("div");box.innerHTML=comboBarHTML();
+  if(box.firstChild)el.parentNode.replaceChild(box.firstChild,el);
+}
+/* 全屏庆祝层：pointer-events:none，不拦点击、不打断答题；3.2 秒自动收，按键也可收 */
+function showGift(g){
+  closeGift();
+  var d=document.createElement("div");
+  d.className="gift";d.id="gift";
+  d.innerHTML='<div class="gbox"><div class="gico">'+g.e+'</div><div class="gico2">'+g.e2+'</div>'+
+    '<div class="gt1">连对 '+S.combo+' 题！</div><div class="gt0">奖励：'+g.n+'</div>'+
+    '<div class="gt2">'+g.t+'</div></div>';
+  document.body.appendChild(d);
+  play("praise_perfect");
+  giftTid=setTimeout(closeGift,3200);
+}
+function closeGift(){
+  if(giftTid){clearTimeout(giftTid);giftTid=null;}
+  var el=document.getElementById("gift");
+  if(el&&el.parentNode)el.parentNode.removeChild(el);
+}
+/* 结算页礼物墙 */
+function giftWallHTML(){
+  if(!S.gifts.length)return '<div class="gwall"><div class="gwt">本次没有收到小礼物</div>'+
+    '<div class="gws">连续答对 '+COMBO_GIFT+' 题就能收到一份，下次试试一次连对到底～</div></div>';
+  var e="";for(var i=0;i<S.gifts.length;i++)e+='<span>'+S.gifts[i].e+'</span>';
+  var cnt={};for(var j=0;j<S.gifts.length;j++)cnt[S.gifts[j].n]=(cnt[S.gifts[j].n]||0)+1;
+  var list=[];for(var k in cnt)list.push(k+(cnt[k]>1?'×'+cnt[k]:''));
+  return '<div class="gwall"><div class="gwt">本次收获 <b>'+S.gifts.length+'</b> 份小礼物 🎁</div>'+
+    '<div class="gwl">'+e+'</div><div class="gws">'+list.join('、')+
+    '　·　累计 '+giftTotal()+' 份</div></div>';
+}
+document.addEventListener("keydown",function(){if(document.getElementById("gift"))closeGift();});
 
 /* ---------- 倒计时 ---------- */
 function startTimer(){
@@ -437,10 +570,13 @@ function showResult(ok,isTimeout){
     else if(oi===S.chosen){bs[i].classList.add("no");}
     else{bs[i].classList.add("dim");}
   }
+  var gain=0,giftHit=false;
   if(ok){
     S.right++;S.combo++;if(S.combo>S.maxCombo)S.maxCombo=S.combo;
     var mult=S.combo>=5?2:(S.combo>=3?1.5:1);
-    S.score+=Math.round(10*mult);
+    gain=Math.round(10*mult);
+    S.score+=gain;
+    if(S.combo%COMBO_GIFT===0)giftHit=true;      /* 每满 5 连对送一份 */
     praise("ok");
   }else{
     S.combo=0;
@@ -452,9 +588,21 @@ function showResult(ok,isTimeout){
   var fb=document.getElementById("fb");
   var head=ok?'<div class="fbh">✅ '+pickPraise()+'</div>'
              :(isTimeout?'<div class="fbh">⏰ 时间到</div>':'<div class="fbh">❌ 差一点点</div>');
+  /* 答题情况：得分变化 + 连对进度 + 正确答案（全部在作答之后才出现） */
+  var sub="";
+  if(ok){
+    sub='<div class="fbm"><span class="p">+'+gain+' 分</span><span class="c">🔥 连对 '+S.combo+' 题</span>'+
+        (giftHit?'<span class="g">小礼物到手 🎁</span>'
+                :'<span class="g">再连对 '+(COMBO_GIFT-S.combo%COMBO_GIFT)+' 题送小礼物 🎁</span>')+'</div>';
+  }else{
+    sub='<div class="fbm no"><span class="c">🔥 连对中断，重新开始计数</span>'+
+        (q.correctIdx>=0?'<span class="a">正确答案：'+esc(q.o[q.correctIdx])+'</span>':'')+'</div>';
+  }
   fb.className="fbc show "+(ok?"ok":"no");
-  fb.innerHTML=head+'<div class="fbr"><b>规则　</b>'+esc(q.r)+'</div>'+
+  fb.innerHTML=head+sub+'<div class="fbr"><b>规则　</b>'+esc(q.r)+'</div>'+
      (q.c?"<div class=\"fbc2\">"+esc(q.c)+"</div>":"");
+  if(giftHit)showGift(takeGift());   /* 连对达标：全屏送小礼物 */
+  refreshCombo();
   var spk=document.getElementById("spk");
   /* 真题关的题没有音频，不显示读音按钮（否则是坏按钮） */
   if(spk&&q.aa)spk.classList.add("show");
@@ -480,7 +628,7 @@ function goPrev(){
 /* ---------- 结算 ---------- */
 function starsOf(right,n){var a=right/n;if(a>=1)return 3;if(a>=0.8)return 2;return 1;}
 function renderResult(){
-  stopTimer();S.scr="result";
+  stopTimer();closeGift();S.scr="result";
   var n=S.qs.length,st=starsOf(S.right,n),lv=BANK[S.lv];
   var p=PROG[lv.id]||{};
   if(!p.stars||st>p.stars||(st===p.stars&&S.score>(p.best||0))){
@@ -491,7 +639,8 @@ function renderResult(){
   var sv="";for(var i=0;i<3;i++)sv+=i<st?"<i>★</i>":"★";
   var h='<div class="rt-wrap"><div class="result"><div class="stars">'+sv+'</div>'+
     '<h2>'+(st===3?"全对，规则掌握了":(st===2?"不错，还有小漏洞":"再来一遍会更好"))+'</h2>'+
-    '<div class="note">正确 '+S.right+' / '+n+'　·　最高连对 '+S.maxCombo+'<br>本关得分 <b>'+S.score+'</b></div>'+
+    '<div class="note">正确 '+S.right+' / '+n+'（正确率 '+Math.round(S.right/n*100)+'%）　·　最高连对 '+S.maxCombo+
+    '<br>本关得分 <b>'+S.score+'</b></div>'+giftWallHTML()+
     '<div class="sc">第'+lv.id+'关 · '+esc(lv.name)+'</div>';
   h+='<div class="rbtns">';
   if(S.wrong.length)h+='<button class="btn" id="rw">重做错题（'+S.wrong.length+' 题）</button>';
